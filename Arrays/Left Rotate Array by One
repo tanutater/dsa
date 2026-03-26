@@ -1,0 +1,22 @@
+// lc->189
+class Solution {
+public:
+    void reverse(vector<int>&nums,int s,int e){
+        int n=nums.size()-1;
+        if(s<=n && e<=n){
+            while(s<=e){
+                swap(nums[s++],nums[e--]);
+            }
+        }   
+    }
+    void rotate(vector<int>& nums, int k) {
+        int n=nums.size();
+        int r=k;
+        if(n!=0 && k!=0)
+            r=k%n;
+        if(r==0) return ;
+        reverse(nums,0,n-1);
+        reverse(nums,0,r-1);
+        reverse(nums,r,n-1);
+    }
+};
