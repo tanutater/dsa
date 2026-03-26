@@ -1,0 +1,41 @@
+//lc->1011
+
+class Solution {
+public:
+    bool isPossible(int mid,int d,vector<int>&weights){
+        int day=1;
+        int currW=0;
+        for(int i=0;i<weights.size();i++){
+            if(currW+weights[i]<=mid){
+                currW+=weights[i];
+            }
+            else{
+                day++;
+                currW=weights[i];
+                if(weights[i]>mid || day>d) return false;
+            }
+        }
+        if(day<=d) return true;
+        return false;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int s=1;
+        int e=0;
+        for(int i=0;i<weights.size();i++){
+            e+=weights[i];
+        }
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(isPossible(mid,days,weights)){
+                cout<<mid<<" ";
+                ans=mid;
+                e=mid-1;
+            }
+            else{
+                s=mid+1;
+            }
+        }
+        return ans;
+    }
+};
