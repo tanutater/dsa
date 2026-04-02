@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>>ans;
+        sort(intervals.begin(),intervals.end());
+        ans.push_back({intervals[0][0],intervals[0][1]});
+        int i=1;
+        int n=intervals.size();
+        while(i<n){
+            int start=intervals[i][0];
+            int end=intervals[i][1];
+            int prevE=ans.back()[1];
+            int prevS=ans.back()[0];
+            if(start<=prevE && end>=prevS){
+                prevE=max(prevE,intervals[i][1]);
+                start=min(ans.back()[0],start);
+                ans.back()[0]=start;
+                ans.back()[1]=prevE;
+            }
+            else{
+                ans.push_back({intervals[i][0],intervals[i][1]});
+            }
+            i++;
+        }
+        return ans;
+    }
+};
