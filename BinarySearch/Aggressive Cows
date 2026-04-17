@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    bool isPossible(int mid,int k,vector<int>&stalls){
+        int cowsCount=1;
+        int prevIdx=0;
+        for(int i=1;i<stalls.size();i++){
+            if(stalls[i]-stalls[prevIdx]>=mid){
+                cowsCount++;
+                prevIdx=i;
+            }
+            if(cowsCount==k) return true;
+        }
+        return cowsCount==k;
+    }
+    int aggressiveCows(vector<int> &stalls, int k) {
+        // code here
+        sort(stalls.begin(),stalls.end());
+        int s=1;
+        int e=0;
+        for(int i=0;i<stalls.size();i++){
+            e=max(e,stalls[i]);
+        }
+        int ans=INT_MIN;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(isPossible(mid,k,stalls)){
+                ans=max(ans,mid);
+                s=mid+1;
+            }
+            else{
+                e=mid-1;
+            }
+        }
+        return ans;
+    }
+};
