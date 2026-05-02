@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool isValid(int row,int col,vector<string>&temp,int n){
+        int r=row;
+        int c=col;
+        while(r>=0 && c>=0){
+            if(temp[r][c]=='Q') return false;
+            r--;
+            c--;
+        }
+        r=row;
+        c=col;
+        while(c>=0){
+            if(temp[r][c]=='Q') return false;
+            c--;
+        }
+        r=row;
+        c=col;
+        while(r<n &&c>=0 ){
+            if(temp[r][c]=='Q') return false;
+            c--;
+            r++;
+        }
+        return true;
+    }
+    void solve(int n,vector<vector<string>>&ans,vector<string>&temp,int col){
+        if(col==n){
+            ans.push_back(temp);
+            return;
+        }
+        for(int row=0;row<n;row++){
+            if(isValid(row,col,temp,n)){
+                temp[row][col]='Q';
+                solve(n,ans,temp,col+1);
+                temp[row][col]='.';
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans;
+        vector<string>temp(n);
+        string s(n,'.');
+        for(int i=0;i<n;i++){
+            temp[i]=s;
+        }
+        solve(n,ans,temp,0);
+        return ans;
+    }
+};
